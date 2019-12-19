@@ -1,5 +1,6 @@
 auto-save-list
-elpa-*/
+.lsp-session-v*
+elpa*/
 eshell/
 history
 projectile-bookmarks.eld

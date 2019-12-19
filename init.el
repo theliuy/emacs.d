@@ -3,6 +3,11 @@
 (when (version< emacs-version "26.1")
   (message "Your Emacs is old, and some functionality in this config will be disabled. Please upgrade if possible."))
 
+(package-initialize)
+
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+                         ("melpa" . "http://melpa.org/packages/")))
+
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
 (defconst *spell-check-support-enabled* nil)
@@ -59,7 +64,7 @@
 
 (require 'init-editing-utils)
 (require 'init-whitespace)
-;; (require 'init-paredit)
+(require 'init-paredit)
 
 ;; svn
 (require 'init-vc)
@@ -122,7 +127,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (yasnippet company-lsp lsp-ui lsp-mode zenburn-theme whole-line-or-region whitespace-cleanup-mode which-key wgrep vlf vc-darcs uptimes unfill textile-mode symbol-overlay switch-window sqlformat smex session scratch regex-tool rainbow-mode rainbow-delimiters paredit page-break-lines osx-location origami ns-auto-titlebar multiple-cursors move-dup mode-line-bell mmm-mode markdown-mode magit-todos macrostep lua-mode list-unicode-display ledger-mode ivy-xref ipretty info-colors immortal-scratch ibuffer-vc ibuffer-projectile htmlize highlight-quoted highlight-escape-sequences goto-line-preview gnuplot gnu-elpa-keyring-update gitignore-mode gitconfig-mode git-timemachine git-blamed fullframe flycheck-package flycheck-ledger flycheck-color-mode-line expand-region exec-path-from-shell elisp-slime-nav dsvn dotenv-mode disable-mouse diredfl dimmer diminish diff-hl default-text-scale dash-at-point darcsum daemons counsel company-quickhelp command-log-mode color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized cmd-to-echo cl-libify cl-lib-highlight cask-mode browse-kill-ring browse-at-remote beacon avy auto-compile anzu alert aggressive-indent)))
+    (helm-lsp lsp-treemacs yasnippet company-lsp lsp-ui lsp-mode zenburn-theme whole-line-or-region whitespace-cleanup-mode which-key wgrep vlf vc-darcs uptimes unfill textile-mode symbol-overlay switch-window sqlformat smex session scratch regex-tool rainbow-mode rainbow-delimiters paredit page-break-lines osx-location origami ns-auto-titlebar multiple-cursors move-dup mode-line-bell mmm-mode markdown-mode magit-todos macrostep lua-mode list-unicode-display ledger-mode ivy-xref ipretty info-colors immortal-scratch ibuffer-vc ibuffer-projectile htmlize highlight-quoted highlight-escape-sequences goto-line-preview gnuplot gnu-elpa-keyring-update gitignore-mode gitconfig-mode git-timemachine git-blamed fullframe flycheck-package flycheck-ledger flycheck-color-mode-line expand-region exec-path-from-shell elisp-slime-nav dsvn dotenv-mode disable-mouse diredfl dimmer diminish diff-hl default-text-scale dash-at-point darcsum daemons counsel company-quickhelp command-log-mode color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized cmd-to-echo cl-libify cl-lib-highlight cask-mode browse-kill-ring browse-at-remote beacon avy auto-compile anzu alert aggressive-indent)))
  '(session-use-package t nil (session)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
