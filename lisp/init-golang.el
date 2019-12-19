@@ -5,6 +5,7 @@
 (require 'package)
 
 (require-package 'go-mode)
+(require-package 'go-imports)
 (require-package 'lsp-mode)
 (require-package 'lsp-ui)
 (require-package 'company)
@@ -15,11 +16,10 @@
   (setq tab-width 4)
   (setq indent-tabs-mode 1)
   (setq gofmt-command "goimports")
-  (add-hook 'before-save-hook 'lsp-format-buffer t t)
-  (add-hook 'before-save-hook 'lsp-organize-imports t t)
+  (add-hook 'before-save-hook 'gofmt-before-save)
   )
 
-(add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+(add-hook 'go-mode-hook 'lsp-go-install-save-hooks)
 (add-hook 'go-mode-hook #'lsp)
 (add-hook 'go-mode-hook #'lsp-deferred)
 
