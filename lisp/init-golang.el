@@ -4,6 +4,7 @@
 
 (require 'package)
 
+(require-package 'go-mode)
 (require-package 'lsp-mode)
 (require-package 'lsp-ui)
 (require-package 'company)
@@ -18,7 +19,9 @@
   (add-hook 'before-save-hook 'lsp-organize-imports t t)
   )
 
-(add-hook 'go-mode-hook 'lsp-go-install-save-hooks)
+(add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+(add-hook 'go-mode-hook #'lsp)
+(add-hook 'go-mode-hook #'lsp-deferred)
 
 (lsp-ui-mode t)
 (company-lsp t)
