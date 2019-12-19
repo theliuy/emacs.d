@@ -1,0 +1,11 @@
+auto-save-list
+elpa-*/
+eshell/
+history
+projectile-bookmarks.eld
+recentf
+transient/
+.emacs.desktop
+.session
+.smex-items
+.uptimes.el
