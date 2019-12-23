@@ -44,7 +44,7 @@
 (require 'init-gui-frames)
 
 ;; searching
-(require 'init-ace-window)
+(require 'Init-Ace-window)
 (require 'init-dired)
 (require 'init-isearch)
 (require 'init-grep)
