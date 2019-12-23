@@ -83,6 +83,7 @@
 (require 'init-sql)
 (require 'init-lisp)
 (require 'init-common-lisp)
+(require 'init-thrift)
 
 ;; misc
 (require 'init-misc)
