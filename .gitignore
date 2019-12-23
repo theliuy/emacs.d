@@ -1,5 +1,6 @@
 auto-save-list
 .lsp-session-v*
+\#*
 elpa*/
 eshell/
 history
