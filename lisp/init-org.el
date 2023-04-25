@@ -26,6 +26,8 @@
   (maybe-require-package 'grab-mac-link))
 
 (maybe-require-package 'org-cliplink)
+(maybe-require-package 'ob-go)
+(maybe-require-package 'org-bullets-mode)
 
 (define-key global-map (kbd "C-c l") 'org-store-link)
 (define-key global-map (kbd "C-c a") 'org-agenda)
@@ -51,9 +53,10 @@
       org-export-kill-product-buffer-when-displayed t
       org-tags-column 80)
 
+;; agenda files
+(setq org-agenda-files (append '("~/dev/notes" "~/.emacs.d") (file-expand-wildcards "/Users/liuyang.09/dev/notes/*")))
 
 ;; Lots of stuff from http://doc.norang.ca/org-mode.html
-
 ;; TODO: fail gracefully
 (defun sanityinc/grab-ditaa (url jar-name)
   "Download URL and extract JAR-NAME as `org-ditaa-jar-path'."
@@ -90,7 +93,8 @@
 ;; Re-align tags when window shape changes
 (after-load 'org-agenda
   (add-hook 'org-agenda-mode-hook
-            (lambda () (add-hook 'window-configuration-change-hook 'org-agenda-align-tags nil t))))
+            (lambda () (add-hook 'window-configuration-change-hook 'org-agenda-align-tags nil t))
+            ))
 
 
 
@@ -135,10 +139,11 @@ typical word processor."
       (writeroom-mode 0))))
 
 ;;(add-hook 'org-mode-hook 'buffer-face-mode)
-
+(add-hook 'org-mode-hook (lambda ()(org-bullets-mode 1)))
 
 (setq org-support-shift-select t)
 
+
 ;;; Capturing
 
 (global-set-key (kbd "C-c c") 'org-capture)
@@ -150,6 +155,19 @@ typical word processor."
          "* %? :NOTE:\n%U\n%a\n" :clock-resume t)
         ))
 
+;;; auto load http link title
+(defun org-url-get-title (url &optional descr)
+  (let ((buffer (url-retrieve-synchronously url))
+        (title nil))
+    (save-excursion
+      (set-buffer buffer)
+      (goto-char (point-min))
+      (search-forward-regexp "<title>\\([^<]+?\\)</title>")
+      (setq title (match-string 1 ) )
+      (kill-buffer (current-buffer)))
+    title))
+
+(setf org-make-link-description-function #'org-url-get-title)
 
 
 ;;; Refiling
@@ -191,6 +209,7 @@ typical word processor."
 (setq org-refile-allow-creating-parent-nodes 'confirm)
 
 
+
 ;;; To-do settings
 
 (setq org-todo-keywords
@@ -355,6 +374,13 @@ typical word processor."
 (setq org-archive-mark-done nil)
 (setq org-archive-location "%s_archive::* Archive")
 
+(defun org-archive-done-tasks ()
+  (interactive)
+  (org-map-entries
+   (lambda ()
+     (org-archive-subtree)
+     (setq org-map-continue-from (org-element-property :begin (org-element-at-point))))
+   "/DONE" 'tree))
 
 
 
@@ -412,7 +438,6 @@ typical word processor."
      (,(if (locate-library "ob-sh") 'sh 'shell) . t)
      (sql . t)
      (sqlite . t))))
-
 
 (provide 'init-org)
 ;;; init-org.el ends here
